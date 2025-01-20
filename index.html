@@ -3,71 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR code generator</title>
+    <title>QR Code Generator</title>
     <style>
-        body, html{
-            margin : 0;
-            padding : 0;
-            height : 100%;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
         }
-        .container{
+        .container {
             background-color: blue;
-            display : flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            height : 100%; 
-            flex-direction : column; 
+            height: 100%;
+            flex-direction: column;
         }
         .input {
             background-color: white;
-            padding : 50px  100px;
+            padding: 50px 100px;
             text-align: center;
-            border : 5px solid black;
-            border-radius :20px;
-
+            border: 5px solid black;
+            border-radius: 20px;
         }
-        P{
-            font-size : 200%;
+        p {
+            font-size: 200%;
         }
         input {
             height: 50px;
-            width : 250px;
-            border-radius : 15px;
+            width: 250px;
+            border-radius: 15px;
         }
         button {
             background-color: blue;
-            height : 50 px;
-            width : 250px;
-            border-radius : 15px;
+            height: 50px;
+            width: 250px;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
         }
-        button:hover{
+        button:hover {
             background-color: white;
-            transform:scale(1.05);
+            color: blue;
+            transform: scale(1.05);
+        }
+        .qr {
+            margin-top: 20px;
+        }
+        .qr img {
+            border: 2px solid white;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="input">
-            <p>QR code Generator</p>
+            <p>QR Code Generator</p>
             <input type="text" id="inputtext" placeholder="Enter URL or text"> <br><br>
             <button onclick="generate()">Generate QR</button>
         </div>
-        
-        <!--*This div will be called when clicking the button-->
         <div class="qr">
             <div class="img">
-                <img src="" id="imgqr"><br><br>
+                <img src="" id="imgqr" alt="Your QR Code will appear here">
             </div>
         </div>
     </div>
     <script>
-       // string concatination
-       let inputtext = document.getElementById("inputtext").value;
-       let image = document.getElementById("imgqr").src;
-       function generate(){
-        imgqr.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + inputtext.value ;
-       }
+        function generate() {
+            const inputtext = document.getElementById("inputtext").value.trim();
+            const imgqr = document.getElementById("imgqr");
+            if (inputtext) {
+                imgqr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(inputtext)}`;
+            } else {
+                alert("Please enter some text or URL to generate a QR code.");
+            }
+        }
     </script>
 </body>
 </html>
